@@ -1,7 +1,3 @@
-" =======================================================
-" ~/.config/nvim/init.vim
-" =======================================================
-
 if empty(glob('~/.local/share/nvim/site/autoload/plug.vim'))
   silent !curl -fLo ~/.local/share/nvim/site/autoload/plug.vim
     \ --create-dirs
@@ -12,6 +8,13 @@ endif
 call plug#begin('~/.vim/plugged')
 
 Plug 'junegunn/vim-plug'
+
+Plug 'scrooloose/syntastic'
+Plug 'cocopon/iceberg.vim'
+Plug 'Rigellute/rigel'
+Plug 'tomasr/molokai'
+Plug 'pgavlin/pulumi.vim'
+Plug 'ghifarit53/tokyonight-vim'
 
 Plug 'prabirshrestha/vim-lsp'
 Plug 'mattn/vim-lsp-settings'
@@ -28,80 +31,23 @@ Plug 'vim-airline/vim-airline-themes'
 
 Plug 'Shougo/denite.nvim', { 'do': ':UpdateRemotePlugins' }
 Plug 'chemzqm/denite-git'
-Plug 'xxuxa-k/denite-source-ridgepole'
 Plug 'Shougo/neomru.vim'
-Plug 'Shougo/deol.nvim'
 Plug 'Shougo/defx.nvim', { 'do': ':UpdateRemotePlugins' }
-" Plug 'kristijanhusak/defx-icons'
-" Plug 'kristijanhusak/defx-git'
 
 Plug 'junegunn/fzf', { 'do': './install --bin' }
 Plug 'junegunn/fzf.vim'
 
-Plug 'scrooloose/nerdtree'
-Plug 'Xuyuanp/nerdtree-git-plugin'
-
-Plug 'lambdalisue/fern.vim'
-Plug 'lambdalisue/fern-comparator-lexical.vim'
-
-Plug 'tpope/vim-fugitive'
-Plug 'airblade/vim-gitgutter'
-
-" Plug 'Shougo/deoppet.nvim', { 'do': ':UpdateRemotePlugins' }
-
-Plug 'scrooloose/syntastic'
-Plug 'cocopon/iceberg.vim'
-Plug 'Rigellute/rigel'
-Plug 'tomasr/molokai'
-Plug 'pgavlin/pulumi.vim'
-Plug 'ghifarit53/tokyonight-vim'
-
-Plug 'gre/play2vim'
-Plug 'tpope/vim-rails'
-Plug 'tpope/vim-endwise'
-Plug 'vim-scripts/ruby-matchit'
-Plug 'pangloss/vim-javascript'
-Plug 'yuezk/vim-js'
-Plug 'maxmellon/vim-jsx-pretty', { 'for': ['javascript', 'javascript.jsx'] }
-Plug 'leafgarland/typescript-vim'
-Plug 'peitalin/vim-jsx-typescript'
-Plug 'jxnblk/vim-mdx-js'
-Plug 'posva/vim-vue'
-Plug 'othree/html5.vim'
-Plug 'ekalinin/Dockerfile.vim'
-Plug 'hashivim/vim-terraform'
-Plug 'robertbasic/vim-hugo-helper'
-Plug 'alvan/vim-closetag'
-Plug 'slim-template/vim-slim', { 'for': 'slim' }
-Plug 'derekwyatt/vim-scala', { 'for': 'scala' }
-Plug 'tpope/vim-markdown', { 'for': 'markdown' }
-Plug 'guns/vim-sexp', { 'for': 'clojure' }
-Plug 'liquidz/vim-iced', { 'for': 'clojure' }
-Plug 'tpope/vim-fireplace', { 'for': 'clojure' }
-
 Plug 'vim-jp/vimdoc-ja'
 Plug 'LeafCage/vimhelpgenerator'
 Plug 'editorconfig/editorconfig-vim'
+Plug 'kristijanhusak/vim-carbon-now-sh'
 Plug 'mattn/vim-sl'
 Plug 'tpope/vim-surround'
 Plug 'simeji/winresizer'
 Plug 'luochen1990/rainbow'
 Plug 'mechatroner/rainbow_csv'
-Plug 'Shougo/junkfile.vim'
-Plug 'pechorin/any-jump.vim'
-Plug 'mattn/webapi-vim'
-Plug 'dhruvasagar/vim-table-mode'
 Plug 'tyru/caw.vim'
-Plug 'lambdalisue/readablefold.vim'
 Plug 'junegunn/vim-peekaboo'
-Plug 'kristijanhusak/vim-carbon-now-sh'
-Plug 'terryma/vim-multiple-cursors'
-Plug 'glacambre/firenvim', { 'do': { _ -> firenvim#install(0) } }
-Plug 'easymotion/vim-easymotion'
-Plug 't9md/vim-quickhl'
-Plug 'darfink/vim-plist'
-Plug 'mhinz/vim-startify'
-Plug 'xxuxa-k/fretboard.vim'
 
 call plug#end()
 
@@ -164,7 +110,6 @@ set novisualbell
 set autoread
 
 let mapleader="\<Space>"
-let NERDTreeShowHidden=1
 let g:airline#extensions#tabline#enabled=1
 let g:airline#extensions#tabline#left_sep=' '
 let g:airline#extensions#tabline#left_alt_sep='|'
@@ -464,252 +409,4 @@ autocmd User asyncomplete_setup call asyncomplete#register_source(asyncomplete#s
     \ 'whitelist': ['html'],
     \ 'completor': function('asyncomplete#sources#emmet#completor'),
     \ }))
-
-" =======================================================
-" Lsp Settings
-" =======================================================
-
-if executable('solargraph')
-  augroup LspRuby
-    autocmd!
-    autocmd User lsp_setup call lsp#register_server({
-          \ 'name': 'solargraph',
-          \ 'cmd': {server_info->[&shell, &shellcmdflag, 'solargraph stdio']},
-          \ 'initialization_options': {"diagnostics": "true"},
-          \ 'whitelist': ['ruby'],
-          \ })
-  augroup END
-endif
-
-if executable('vim-language-server')
-  augroup LspVim
-    autocmd!
-    autocmd User lsp_setup call lsp#register_server({
-          \ 'name': 'vim-language-server',
-          \ 'cmd': {server_info->['vim-language-server', '--stdio']},
-          \ 'whitelist': ['vim'],
-          \ 'initialization_options': {
-          \   'iskeyword': '@,48-57,_,192-255,-#',
-          \   'vimruntime': expand($VIMRUNTIME),
-          \   'suggest': { 'fromVimruntime': v:true },
-          \ }})
-  augroup END
-endif
-
-if executable('typescript-language-server')
-  augroup LspTypescript
-    autocmd!
-    au User lsp_setup call lsp#register_server({
-          \ 'name': 'typescript-language-server',
-          \ 'cmd': {server_info->[&shell, &shellcmdflag, 'typescript-language-server --stdio']},
-          \ 'root_uri':{server_info->lsp#utils#path_to_uri(lsp#utils#find_nearest_parent_file_directory(lsp#utils#get_buffer_path(), 'tsconfig.json'))},
-          \ 'whitelist': ['typescript', 'typescript.tsx'],
-          \ })
-    au User lsp_setup call lsp#register_server({
-         \ 'name': 'javascript support using typescript-language-server',
-         \ 'cmd': { server_info->[&shell, &shellcmdflag, 'typescript-language-server --stdio']},
-         \ 'root_uri': { server_info->lsp#utils#path_to_uri(lsp#utils#find_nearest_parent_directory(lsp#utils#get_buffer_path(), '.git/..'))},
-         \ 'whitelist': ['javascript', 'javascript.jsx', 'javascriptreact']
-         \ })
-  augroup END
-endif
-
-if executable('intelephense')
-  augroup LspPhp
-    autocmd!
-    au User lsp_setup call lsp#register_server({
-          \ 'name': 'intelephense',
-          \ 'cmd': {server_info->['node', expand('~/.anyenv/envs/nodenv/versions/13.2.0/lib/node_modules/intelephense/lib/intelephense.js'), '--stdio']},
-          \ 'initialization_options': {"storagePath": "/tmp/intelephense"},
-          \ 'whitelist': ['php'],
-          \ 'workspace_config': { 'intelephense': {
-          \   'files.associations': ['*.php'],
-          \ }},
-          \ })
-  augroup END
-endif
-
-if executable('css-languageserver')
-  augroup LspCss
-    autocmd!
-    au User lsp_setup call lsp#register_server({
-          \ 'name': 'css-languageserver',
-          \ 'cmd': {server_info->[&shell, &shellcmdflag, 'css-languageserver --stdio']},
-          \ 'whitelist': ['css', 'less', 'sass'],
-          \ })
-  augroup END
-endif
-
-if executable('java') && filereadable(expand('$HOME/.lsp/groovy-language-server/build/libs/groovy-language-server.jar'))
-  augroup LspGroovy
-    autocmd!
-    autocmd User lsp_setup call lsp#register_server({
-          \'name': 'groovy-language-server',
-          \'cmd': {server_info->[
-          \  'java',
-          \  '-jar',
-          \  expand('$HOME/.lsp/groovy-language-server/build/libs/groovy-language-server.jar')
-          \]},
-          \'whitelist': ['groovy']
-          \})
-  augroup END
-endif
-
-if executable('java') && filereadable(expand('~/.lsp/eclipse.jdt.ls/plugins/org.eclipse.equinox.launcher_1.5.600.v20191014-2022.jar'))
-  augroup LspJava
-    autocmd!
-    au User lsp_setup call lsp#register_server({
-          \ 'name': 'eclipse.jdt.ls',
-          \ 'cmd': {server_info->[
-          \     'java',
-          \     '-Declipse.application=org.eclipse.jdt.ls.core.id1',
-          \     '-Dosgi.bundles.defaultStartLevel=4',
-          \     '-Declipse.product=org.eclipse.jdt.ls.core.product',
-          \     '-Dlog.level=ALL',
-          \     '-noverify',
-          \     '-Dfile.encoding=UTF-8',
-          \     '-Xmx1G',
-          \     '-jar',
-          \     expand('~/.lsp/eclipse.jdt.ls/plugins/org.eclipse.equinox.launcher_1.5.600.v20191014-2022.jar'),
-          \     '-configuration',
-          \     expand('~/.lsp/eclipse.jdt.ls/config_mac'),
-          \     '-data',
-          \     getcwd()
-          \ ]},
-          \ 'whitelist': ['java'],
-          \ })
-  augroup END
-endif
-
-if executable('metals-vim')
-  augroup LspScala
-    autocmd!
-    au User lsp_setup call lsp#register_server({
-          \ 'name': 'metals',
-          \ 'cmd': {server_info->['metals-vim']},
-          \ 'initialization_options': { 'rootPatterns': 'build.sbt' },
-          \ 'whitelist': [ 'scala', 'sbt' ],
-          \ })
-  augroup END
-endif
-
-if executable('docker-langserver')
-  augroup LspDocker
-    autocmd!
-    au User lsp_setup call lsp#register_server({
-          \ 'name': 'docker-langserver',
-          \ 'cmd': {server_info->[&shell, &shellcmdflag, 'docker-langserver --stdio']},
-          \ 'whitelist': ['dockerfile'],
-          \ })
-  augroup END
-endif
-
-if executable('html-languageserver')
-  augroup LspHtml
-    autocmd!
-    au User lsp_setup call lsp#register_server({
-          \ 'name': 'html-languageserver',
-          \ 'cmd': {server_info->[&shell, &shellcmdflag, 'html-languageserver --stdio']},
-          \ 'whitelist': ['html'],
-          \ })
-  augroup END
-endif
-
-if executable('yaml-language-server')
-  augroup LspYaml
-    autocmd!
-    autocmd User lsp_setup call lsp#register_server({
-          \ 'name': 'yaml-language-server',
-          \ 'cmd': {server_info->['yaml-language-server', '--stdio']},
-          \ 'whitelist': ['yaml', 'yaml.ansible'],
-          \ 'workspace_config': {
-          \   'yaml': {
-          \     'validate': v:true,
-          \     'hover': v:true,
-          \     'completion': v:true,
-          \     'customTags': [],
-          \     'schemas': {},
-          \     'schemaStore': { 'enable': v:true },
-          \   }
-          \ }
-          \})
-  augroup END
-endif
-
-if executable('go-langserver')
-  au User lsp_setup call lsp#register_server({
-        \ 'name': 'go-langserver',
-        \ 'cmd': {server_info->['go-langserver', '-gocodecompletion']},
-        \ 'whitelist': ['go'],
-        \ })
-  autocmd BufWritePre *.go LspDocumentFormatSync
-end
-
-if executable('pyls')
-  augroup LspPython
-    autocmd!
-    au User lsp_setup call lsp#register_server({
-          \ 'name': 'pyls',
-          \ 'cmd': {server_info->['pyls']},
-          \ 'whitelist': ['python'],
-          \ })
-  augroup END
-endif
-
-if executable('rls')
-  augroup LspRust
-    autocmd!
-  au User lsp_setup call lsp#register_server({
-        \ 'name': 'rls',
-        \ 'cmd': {server_info->['rustup', 'run', 'stable', 'rls']},
-        \ 'workspace_config': {'rust': {'clippy_preference': 'on'}},
-        \ 'whitelist': ['rust'],
-        \ })
-  augroup END
-end
-
-if executable('bash-language-server')
-  augroup LspBash
-    autocmd!
-    au User lsp_setup call lsp#register_server({
-          \ 'name': 'bash-language-server',
-          \ 'cmd': {server_info->[&shell, &shellcmdflag, 'bash-language-server start']},
-          \ 'whitelist': ['sh'],
-          \ })
-  augroup END
-endif
-
-if executable('clojure-lsp')
-  augroup LspClojure
-    autocmd!
-    au User lsp_setup call lsp#register_server({
-          \ 'name': 'clojure-lsp',
-          \ 'cmd': {server_info->['clojure-lsp']},
-          \ 'whitelist': ['clojure'],
-          \ })
-  augroup END
-endif
-
-if executable('sql-language-server')
-  augroup LspSql
-    autocmd!
-    au User lsp_setup call lsp#register_server({
-          \ 'name': 'sql-language-server',
-          \ 'cmd': {server_info->['sql-language-server', 'up', '--method', 'stdio']},
-          \ 'whitelist': ['sql'],
-          \ })
-  augroup END
-endif
-
-" check: starting->runningにならない
-if executable('vscode-json-languageserver')
-  augroup LspJson
-    autocmd!
-    au User lsp_setup call lsp#register_server({
-          \ 'name': 'vscode-json-languageserver',
-          \ 'cmd': {server_info->['vscode-json-languageserver', '--node-ipc']},
-          \ 'whitelist': ['json', 'jsonc'],
-          \ })
-  augroup END
-endif
 
