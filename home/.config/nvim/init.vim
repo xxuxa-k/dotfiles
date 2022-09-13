@@ -9,6 +9,12 @@ call plug#begin('~/.vim/plugged')
 
 Plug 'junegunn/vim-plug'
 
+Plug 'cocopon/iceberg.vim'
+Plug 'Rigellute/rigel'
+Plug 'tomasr/molokai'
+Plug 'pgavlin/pulumi.vim'
+Plug 'ghifarit53/tokyonight-vim'
+
 Plug 'prabirshrestha/vim-lsp'
 Plug 'mattn/vim-lsp-settings'
 Plug 'mattn/vim-lsp-icons'
@@ -21,17 +27,11 @@ Plug 'junegunn/fzf.vim'
 
 Plug 'nvim-lua/plenary.nvim'
 Plug 'nvim-telescope/telescope.nvim', { 'tag': '0.1.0' }
-Plug 'nvim-treesitter/nvim-treesitter', { 'do': ':TSUpdate' }
-
 Plug 'nvim-telescope/telescope-file-browser.nvim'
 
-Plug 'simeji/winresizer'
+Plug 'nvim-treesitter/nvim-treesitter', { 'do': ':TSUpdate' }
 
-Plug 'cocopon/iceberg.vim'
-Plug 'Rigellute/rigel'
-Plug 'tomasr/molokai'
-Plug 'pgavlin/pulumi.vim'
-Plug 'ghifarit53/tokyonight-vim'
+Plug 'simeji/winresizer'
 
 Plug 'vim-jp/vimdoc-ja'
 Plug 'LeafCage/vimhelpgenerator'
