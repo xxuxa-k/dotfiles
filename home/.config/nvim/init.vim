@@ -1,7 +1,7 @@
 if empty(glob('~/.local/share/nvim/site/autoload/plug.vim'))
   silent !curl -fLo ~/.local/share/nvim/site/autoload/plug.vim
-    \ --create-dirs
-    \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+        \ --create-dirs
+        \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
   autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
 endif
 
@@ -9,11 +9,7 @@ call plug#begin('~/.vim/plugged')
 
 Plug 'junegunn/vim-plug'
 
-Plug 'cocopon/iceberg.vim'
 Plug 'Rigellute/rigel'
-Plug 'tomasr/molokai'
-Plug 'pgavlin/pulumi.vim'
-Plug 'ghifarit53/tokyonight-vim'
 
 Plug 'prabirshrestha/vim-lsp'
 Plug 'mattn/vim-lsp-settings'
@@ -22,14 +18,8 @@ Plug 'mattn/vim-lsp-icons'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 
-Plug 'junegunn/fzf', { 'do': './install --bin' }
-Plug 'junegunn/fzf.vim'
-
-Plug 'nvim-lua/plenary.nvim'
-Plug 'nvim-telescope/telescope.nvim', { 'tag': '0.1.0' }
-Plug 'nvim-telescope/telescope-file-browser.nvim'
-
-Plug 'nvim-treesitter/nvim-treesitter', { 'do': ':TSUpdate' }
+"  Plug 'junegunn/fzf', { 'do': './install --bin' }
+"  Plug 'junegunn/fzf.vim'
 
 Plug 'simeji/winresizer'
 
@@ -46,16 +36,19 @@ Plug 'Shougo/ddu-ui-ff'
 
 " Install your sources
 
+Plug 'Shougo/ddu-source-file_rec'
+Plug 'Shougo/ddu-source-rg'
+
 " Install your filters
+
+Plug 'Shougo/ddu-filter-matcher_substring'
 
 " Install your kinds
 
+Plug 'Shougo/ddu-kind-file'
+
 
 call plug#end()
-
-" =======================================================
-" Global Settings
-" =======================================================
 
 scriptencoding=utf-8
 
@@ -112,10 +105,6 @@ set novisualbell
 set autoread
 
 let mapleader="\<Space>"
-let g:netrw_liststyle=3
-let g:fzf_layout={
-      \ 'down': '~40%'
-      \ }
 let g:vimhelpgenerator_version=''
 let g:vimhelpgenerator_author='Author: '
 let g:vimhelpgenerator_contents={
@@ -125,17 +114,92 @@ let g:vimhelpgenerator_contents={
       \ }
 let g:lsp_log_verbose=1
 let g:lsp_log_file=expand('~/vim-lsp.log')
-" let g:tokyonight_style='storm'
-let g:tokyonight_style='night'
-let g:tokyonight_enable_italic=1
 
 call ddu#custom#patch_global({
-    \ 'ui': 'ff',
-    \ })
+      \   'ui': 'ff',
+      \   'sources': [
+      \     {
+      \       'name': 'file_rec',
+      \       'params': {
+      \         'ignoredDirectories': ['.git', 'node_modules', 'vendor', '.next']
+      \       }
+      \     }
+      \   ],
+      \   'sourceOptions': {
+      \     '_': {
+      \       'matchers': ['matcher_substring'],
+      \     },
+      \   },
+      \   'filterParams': {
+      \     'matcher_substring': {
+      \       'highlightMatched': 'Title',
+      \     },
+      \   },
+      \   'kindOptions': {
+      \     'file': {
+      \       'defaultAction': 'open',
+      \     },
+      \   },
+      \   'uiParams': {
+      \     'ff': {
+      \       'startFilter': v:true,
+      \       'prompt': '> ',
+      \       'split': 'floating',
+      \     }
+      \   },
+      \ })
 
-" Find files using Telescope command-line sugar.
-nnoremap <leader>ff <cmd>Telescope find_files<cr>
-nnoremap <leader>fg <cmd>Telescope live_grep<cr>
-nnoremap <leader>fb <cmd>Telescope buffers<cr>
-nnoremap <leader>fh <cmd>Telescope help_tags<cr>
+call ddu#custom#patch_local('grep', {
+      \   'sourceParams' : {
+      \     'rg' : {
+      \       'args': ['--column', '--no-heading', '--color', 'never'],
+      \     },
+      \   },
+      \   'uiParams': {
+      \     'ff': {
+      \       'startFilter': v:false,
+      \     }
+      \   },
+      \ })
 
+
+autocmd FileType ddu-ff call s:ddu_my_settings()
+function! s:ddu_my_settings() abort
+  nnoremap <buffer><silent> <CR>
+        \ <Cmd>call ddu#ui#ff#do_action('itemAction', {'name': 'open', 'params': {'command': 'vsplit'}})<CR>
+
+  nnoremap <buffer><silent> <Space>
+        \ <Cmd>call ddu#ui#ff#do_action('itemAction', {'name': 'open', 'params': {'command': 'split'}})<CR>
+
+  nnoremap <buffer><silent> a
+        \ <Cmd>call ddu#ui#ff#do_action('openFilterWindow')<CR>
+
+  nnoremap <buffer><silent> p
+        \ <Cmd>call ddu#ui#ff#do_action('preview')<CR>
+
+  nnoremap <buffer><silent> <Esc>
+        \ <Cmd>call ddu#ui#ff#do_action('quit')<CR>
+endfunction
+
+autocmd FileType ddu-ff-filter call s:ddu_filter_my_settings()
+function! s:ddu_filter_my_settings() abort
+  inoremap <buffer><silent> <CR>
+        \ <Esc><Cmd>close<CR>
+
+  inoremap <buffer><silent> <Esc>
+        \ <Esc><Cmd>close<CR>
+
+  nnoremap <buffer><silent> <CR>
+        \ <Cmd>close<CR>
+
+  nnoremap <buffer><silent> <Esc>
+        \ <Cmd>close<CR>
+endfunction
+
+nmap <silent> ;f <Cmd>call ddu#start({})<CR>
+nmap <silent> ;g <Cmd>call ddu#start({
+      \   'name': 'grep',
+      \   'sources':[
+      \     {'name': 'rg', 'params': {'input': expand('<cword>')}}
+      \   ],
+      \ })<CR>
