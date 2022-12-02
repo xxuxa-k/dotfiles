@@ -48,6 +48,7 @@ Plug 'luochen1990/rainbow'
 Plug 'mechatroner/rainbow_csv'
 Plug 'tyru/caw.vim'
 Plug 'junegunn/vim-peekaboo'
+Plug 'alvan/vim-closetag'
 
 call plug#end()
 
@@ -114,7 +115,7 @@ let g:airline#extensions#tabline#enabled=1
 let g:airline#extensions#tabline#left_sep=' '
 let g:airline#extensions#tabline#left_alt_sep='|'
 let g:rigel_airline=1
-" let g:airline_theme='rigel'
+let g:airline_theme='rigel'
 let g:airline_theme='tokyonight'
 let g:rainbow_active=1
 let g:terraform_fmt_on_save=1
@@ -125,13 +126,13 @@ let g:fzf_layout={
 let g:deol#shell_history_path='~/.zsh_history'
 let g:gitgutter_highlight_lines=0
 let g:javascript_plugin_flow=1
-let g:closetag_filenames='*.html,*.vue,*.php'
-let g:closetag_filetypes='html,vue,php'
-let g:closetag_xhtml_filenames='*.xhtml,*.jsx'
-let g:closetag_xhtml_filetypes = 'xhtml,jsx'
-let g:closetag_emptyTags_caseSensitive=1
+let g:closetag_filetypes='html,jsx,tsx'
+let g:closetag_xhtml_filetypes = 'xhtml'
+let g:closetag_filenames='*.html,*.jsx,*.tsx'
+let g:closetag_xhtml_filenames='*.xhtml'
 let g:closetag_shortcut='>'
-let g:closetag_close_shortcut='<leader>>'
+let g:closetag_close_shortcut=''
+let g:closetag_emptyTags_caseSensitive=0
 let g:hugohelper_spell_check_lang='en_us'
 let g:vimhelpgenerator_version=''
 let g:vimhelpgenerator_author='Author: '
@@ -147,7 +148,7 @@ let g:fern#comparator='lexical'
 let g:iced_enable_default_key_mappings=v:true
 let g:iced#buffer#stdout#mods='vertical'
 let g:iced#buffer#error#height=5
-" let g:tokyonight_style='storm'
+let g:tokyonight_style='storm'
 let g:tokyonight_style='night'
 let g:tokyonight_enable_italic=1
 let g:denite_source_ridgepole#schemafile_path='db/schema/Schemafile'
@@ -208,7 +209,6 @@ nnoremap <Leader>o :Denite outline<CR>
 nnoremap <Leader>u :Denite source<CR>
 nnoremap <Leader>c :Denite gitstatus<CR>
 nnoremap <Leader>r :Denite register<CR>
-" https://wonderwall.hatenablog.com/entry/2017/10/07/220000
 nnoremap <silent>,r :Denite ridgepole<CR>
 nnoremap <silent>,f :Files<CR>
 nnoremap <silent>,g :GFiles<CR>
@@ -220,7 +220,6 @@ nnoremap <silent>,m :Mark<CR>
 nnoremap <silent>,ag :Ag<CR>
 nnoremap <silent>,d :call OpenNewDefx()<CR>
 nnoremap <silent>,n :NERDTreeToggle<CR>
-" https://medium.com/@bookun/vim-advent-calendar-2019-12-20-63a12396211f
 nnoremap <silent>df :Deol -split=floating<CR>
 nnoremap <silent>dv :Deol -split=vertical<CR>
 nnoremap <silent>dx :Deol -split=horizontal<CR>
@@ -324,7 +323,7 @@ autocmd FocusGained,BufEnter * checktime
 
 autocmd BufRead,BufNewFile *.slim set filetype=slim
 autocmd BufRead,BufNewFile *.tsx set filetype=typescript.tsx
-autocmd BufRead,BufNewFile *.jsx set filetype=jsx
+autocmd BufRead,BufNewFile *.jsx set filetype=javascript.jsx
 autocmd BufRead,BufNewFile *.sbt set filetype=scala
 autocmd BufRead,BufNewFile *.js set filetype=javascript
 autocmd BufRead,BufNewFile *.spacemacs set filetype=lisp
