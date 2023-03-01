@@ -103,4 +103,16 @@ nnoremap <Leader>h :History<CR>
 nnoremap <Leader>c :Commands<CR>
 nnoremap <Leader>b :BLines<CR>
 
-" autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | Fern . -reveal=% -drawer | endif
+function s:init_fern() abort
+  nnoremap <buffer>v <Plug>(fern-action-open:right)
+  nnoremap <buffer>i <Plug>(fern-action-open:bottom)
+  nnoremap <buffer>o <Plug>(fern-action-open-or-expand)
+endfunction
+
+augroup fern-custom
+  autocmd! *
+  autocmd FileType fern call s:init_fern()
+augroup END
+
+autocmd FileType help setlocal number relativenumber
+
