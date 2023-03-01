@@ -96,7 +96,7 @@ let g:fern#default_hidden=1
 nnoremap <silent><Esc><Esc> :nohlsearch<CR>
 nnoremap <Leader>w :w<CR>
 nnoremap <Leader>q :q!<CR>
-nnoremap ,d :<C-u>Fern . -reveal=% -drawer<CR>
+nnoremap ,d :<C-u>Fern . -reveal=%<CR>
 nnoremap <Leader>l :Line<CR>
 nnoremap <Leader>f :Files<CR>
 nnoremap <Leader>h :History<CR>
