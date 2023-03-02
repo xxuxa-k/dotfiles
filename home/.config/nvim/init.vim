@@ -20,17 +20,18 @@ Plug 'junegunn/fzf', { 'do': './install --bin' }
 Plug 'junegunn/fzf.vim'
 Plug 'pbogut/fzf-mru.vim'
 
-Plug 'simeji/winresizer'
-
-Plug 'vim-jp/vimdoc-ja'
-
-Plug 'tyru/caw.vim'
-
-Plug 'editorconfig/editorconfig-vim'
-
 Plug 'lambdalisue/fern.vim'
 Plug 'lambdalisue/fern-git-status.vim'
 Plug 'LumaKernel/fern-mapping-fzf.vim'
+
+Plug 'vim-jp/vimdoc-ja'
+Plug 'editorconfig/editorconfig-vim'
+Plug 'mattn/vim-sl'
+Plug 'simeji/winresizer'
+Plug 'luochen1990/rainbow'
+Plug 'mechatroner/rainbow_csv'
+Plug 'tyru/caw.vim'
+Plug 'alvan/vim-closetag'
 
 call plug#end()
 
