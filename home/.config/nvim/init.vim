@@ -9,22 +9,9 @@ call plug#begin('~/.vim/plugged')
 
 Plug 'junegunn/vim-plug'
 
-Plug 'scrooloose/syntastic'
-Plug 'cocopon/iceberg.vim'
 Plug 'Rigellute/rigel'
-Plug 'tomasr/molokai'
-Plug 'pgavlin/pulumi.vim'
-Plug 'ghifarit53/tokyonight-vim'
 
-Plug 'prabirshrestha/vim-lsp'
-Plug 'mattn/vim-lsp-settings'
-Plug 'mattn/vim-lsp-icons'
-Plug 'prabirshrestha/asyncomplete.vim'
-Plug 'prabirshrestha/asyncomplete-lsp.vim'
-Plug 'prabirshrestha/asyncomplete-buffer.vim'
-Plug 'prabirshrestha/asyncomplete-file.vim'
-Plug 'prabirshrestha/asyncomplete-emmet.vim'
-Plug 'lighttiger2505/sqls.vim'
+Plug 'neoclide/coc.nvim', { 'branch': 'release' }
 
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
@@ -40,7 +27,6 @@ Plug 'junegunn/fzf.vim'
 Plug 'vim-jp/vimdoc-ja'
 Plug 'LeafCage/vimhelpgenerator'
 Plug 'editorconfig/editorconfig-vim'
-Plug 'kristijanhusak/vim-carbon-now-sh'
 Plug 'mattn/vim-sl'
 Plug 'tpope/vim-surround'
 Plug 'simeji/winresizer'
@@ -60,11 +46,7 @@ scriptencoding=utf-8
 
 syntax enable
 
-" colorscheme iceberg
 colorscheme rigel
-" colorscheme molokai
-" colorscheme pulumi
-" colorscheme tokyonight
 
 set encoding=utf-8
 set fileencoding=utf-8
@@ -116,7 +98,6 @@ let g:airline#extensions#tabline#left_sep=' '
 let g:airline#extensions#tabline#left_alt_sep='|'
 let g:rigel_airline=1
 let g:airline_theme='rigel'
-let g:airline_theme='tokyonight'
 let g:rainbow_active=1
 let g:terraform_fmt_on_save=1
 let g:netrw_liststyle=3
@@ -188,10 +169,6 @@ cnoremap <Left> <Space><BS><Left>
 cnoremap <Right> <Space><BS><Right>
 nnoremap <C-t>" :split<CR>
 nnoremap <C-t>% :vsplit<CR>
-nnoremap <C-l>d :LspDefinition<CR>
-nnoremap <C-l>s :LspStatus<CR>
-nnoremap <C-l>h :LspHover<CR>
-nnoremap <C-l>c :LspCodeAcion<CR>
 nnoremap <C-g>s :Gstatus<CR>
 nnoremap <C-g>d :Gdiff<CR>
 nnoremap <silent><Esc><Esc> :nohlsearch<CR>
@@ -387,25 +364,7 @@ function! s:defx_my_settings() abort
   nnoremap <silent><buffer><expr> cd defx#do_action('change_vim_cwd')
 endfunction
 
-autocmd User asyncomplete_setup call asyncomplete#register_source(asyncomplete#sources#buffer#get_source_options({
-    \ 'name': 'buffer',
-    \ 'allowlist': ['*'],
-    \ 'completor': function('asyncomplete#sources#buffer#completor'),
-    \ 'config': {
-    \    'max_buffer_size': 5000000,
-    \  },
-    \ }))
+autocmd FileType help setlocal number relativenumber
 
-autocmd User asyncomplete_setup call asyncomplete#register_source(asyncomplete#sources#file#get_source_options({
-    \ 'name': 'file',
-    \ 'allowlist': ['*'],
-    \ 'priority': 10,
-    \ 'completor': function('asyncomplete#sources#file#completor')
-    \ }))
-
-autocmd User asyncomplete_setup call asyncomplete#register_source(asyncomplete#sources#emmet#get_source_options({
-    \ 'name': 'emmet',
-    \ 'whitelist': ['html'],
-    \ 'completor': function('asyncomplete#sources#emmet#completor'),
-    \ }))
+autocmd FileType json syntax match Comment +\/\/.\+$+
 
