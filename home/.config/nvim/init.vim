@@ -19,10 +19,14 @@ Plug 'vim-airline/vim-airline-themes'
 Plug 'Shougo/denite.nvim', { 'do': ':UpdateRemotePlugins' }
 Plug 'chemzqm/denite-git'
 Plug 'Shougo/neomru.vim'
-Plug 'Shougo/defx.nvim', { 'do': ':UpdateRemotePlugins' }
 
 Plug 'junegunn/fzf', { 'do': './install --bin' }
 Plug 'junegunn/fzf.vim'
+Plug 'pbogut/fzf-mru.vim'
+
+Plug 'lambdalisue/fern.vim'
+Plug 'lambdalisue/fern-git-status.vim'
+Plug 'LumaKernel/fern-mapping-fzf.vim'
 
 Plug 'vim-jp/vimdoc-ja'
 Plug 'LeafCage/vimhelpgenerator'
@@ -37,10 +41,6 @@ Plug 'junegunn/vim-peekaboo'
 Plug 'alvan/vim-closetag'
 
 call plug#end()
-
-" =======================================================
-" Global Settings
-" =======================================================
 
 scriptencoding=utf-8
 
@@ -99,14 +99,9 @@ let g:airline#extensions#tabline#left_alt_sep='|'
 let g:rigel_airline=1
 let g:airline_theme='rigel'
 let g:rainbow_active=1
-let g:terraform_fmt_on_save=1
-let g:netrw_liststyle=3
 let g:fzf_layout={
       \ 'down': '~40%'
       \ }
-let g:deol#shell_history_path='~/.zsh_history'
-let g:gitgutter_highlight_lines=0
-let g:javascript_plugin_flow=1
 let g:closetag_filetypes='html,jsx,tsx'
 let g:closetag_xhtml_filetypes = 'xhtml'
 let g:closetag_filenames='*.html,*.jsx,*.tsx'
@@ -114,7 +109,6 @@ let g:closetag_xhtml_filenames='*.xhtml'
 let g:closetag_shortcut='>'
 let g:closetag_close_shortcut=''
 let g:closetag_emptyTags_caseSensitive=0
-let g:hugohelper_spell_check_lang='en_us'
 let g:vimhelpgenerator_version=''
 let g:vimhelpgenerator_author='Author: '
 let g:vimhelpgenerator_contents={
@@ -122,48 +116,13 @@ let g:vimhelpgenerator_contents={
       \ 'variables': 1,
       \ 'functions': 1,
       \ }
-let g:lsp_log_verbose=1
-let g:lsp_log_file=expand('~/vim-lsp.log')
+let g:fern#default_hidden=1
 let g:fern#logfile=expand('~/fern.tsv')
-let g:fern#comparator='lexical'
-let g:iced_enable_default_key_mappings=v:true
-let g:iced#buffer#stdout#mods='vertical'
-let g:iced#buffer#error#height=5
-let g:tokyonight_style='storm'
-let g:tokyonight_style='night'
-let g:tokyonight_enable_italic=1
-let g:denite_source_ridgepole#schemafile_path='db/schema/Schemafile'
 
 if executable('rg')
   let &grepprg='rg --vimgrep --hidden'
   set grepformat=%f:%l:%c:%m
 endif
-
-" =======================================================
-" Functions
-" =======================================================
-
-function! FzfBLinesCurrWord()
-  let currWord = expand('<cword>')
-  if len(currWord) > 0
-    call fzf#vim#blines({'options': '-q ' . currWord})
-  else
-    execute ':BLines'
-  endif
-endfunction
-
-function! OpenNewDefx() abort
-  let l:rand = Rand()
-  execute ':Defx -buffer-name='.l:rand
-endfunction
-
-function! Rand() abort
-  return str2nr(matchstr(reltimestr(reltime()), '\v\.@<=\d+')[1:])
-endfunction
-
-" =======================================================
-" Key Mappings
-" =======================================================
 
 cnoremap <Left> <Space><BS><Left>
 cnoremap <Right> <Space><BS><Right>
@@ -175,6 +134,7 @@ nnoremap <silent><Esc><Esc> :nohlsearch<CR>
 nnoremap <Leader>sl :call sl#animate()<CR>
 nnoremap <Leader>w :w<CR>
 nnoremap <Leader>q :q!<CR>
+nnoremap ,d :<C-u>Fern . -reveal=%<CR>
 nnoremap <Leader>f :Denite file/rec file_mru buffer<CR>
 nnoremap <Leader>l :Denite line<CR>
 nnoremap <Leader>e :Denite file/rec buffer<CR>
@@ -195,16 +155,6 @@ nnoremap <silent>,l :BLines<CR>
 nnoremap <silent>,h :History<CR>
 nnoremap <silent>,m :Mark<CR>
 nnoremap <silent>,ag :Ag<CR>
-nnoremap <silent>,d :call OpenNewDefx()<CR>
-nnoremap <silent>,n :NERDTreeToggle<CR>
-nnoremap <silent>df :Deol -split=floating<CR>
-nnoremap <silent>dv :Deol -split=vertical<CR>
-nnoremap <silent>dx :Deol -split=horizontal<CR>
-nnoremap <silent>bg (deol_bg)
-
-" =======================================================
-" Dark powerd Settings
-" =======================================================
 
 call denite#custom#source('file_mru', 'matchers', ['matcher/fuzzy'])
 call denite#custom#source('file/rec', 'sorters', ['sorter/sublime'])
@@ -237,16 +187,6 @@ call denite#custom#option('default', {
       \ 'start_filter': v:true
       \})
 let s:menus = {}
-let s:menus.rails = {
-      \ 'description': 'Commands in Rails project',
-      \ 'command_candidates': [
-        \ ['install gems', '!bundle install'],
-        \ ['execute tests', '!bundle exec rails test'],
-        \ ['rubocop', '!bundle exec rubocop'],
-        \ ['rubocop auto-correct', '!bundle exec rubocop --auto-correct'],
-        \ ['slim-lint', '!bundle exec slim-lint app/**/*.slim'],
-      \ ]
-      \ }
 let s:menus.dotfiles = {
       \ 'description': 'Edit dotfiles',
       \ 'file_candidates': [
@@ -257,27 +197,6 @@ let s:menus.dotfiles = {
       \ ]
       \ }
 call denite#custom#var('menu', 'menus', s:menus)
-
-call defx#custom#column('mark', {
-    \ 'readonly_icon': '✗',
-    \ 'selected_icon': '✓',
-    \ })
-call defx#custom#option('_', {
-      \ 'show_ignored_files': v:true,
-      \ })
-
-" call deoppet#initialize()
-" call deoppet#custom#option('snippets_dirs', globpath(&runtimepath, 'neosnippets', 1, 1))
-
-" imap <C-k>  <Plug>(deoppet_expand)
-" imap <C-f>  <Plug>(deoppet_jump_forward)
-" imap <C-b>  <Plug>(deoppet_jump_backward)
-" smap <C-f>  <Plug>(deoppet_jump_forward)
-" smap <C-b>  <Plug>(deoppet_jump_backward)
-
-" =======================================================
-" Auto Commands
-" =======================================================
 
 augroup AuthQuickFix
   autocmd!
@@ -294,11 +213,8 @@ augroup MakefileTab
   autocmd FileType make set noexpandtab nosmarttab
 augroup END
 
-autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | Defx | endif
-
 autocmd FocusGained,BufEnter * checktime
 
-autocmd BufRead,BufNewFile *.slim set filetype=slim
 autocmd BufRead,BufNewFile *.tsx set filetype=typescript.tsx
 autocmd BufRead,BufNewFile *.jsx set filetype=javascript.jsx
 autocmd BufRead,BufNewFile *.sbt set filetype=scala
@@ -327,44 +243,30 @@ function! s:denite_preview() abort
   setlocal number
 endfunction
 
-autocmd FileType defx call s:defx_my_settings()
-function! s:defx_my_settings() abort
-  nnoremap <silent><buffer><expr><CR> defx#do_action('open')
-  nnoremap <silent><buffer><expr> c defx#do_action('copy')
-  nnoremap <silent><buffer><expr> m defx#do_action('move')
-  nnoremap <silent><buffer><expr> p defx#do_action('paste')
-  nnoremap <silent><buffer><expr> v defx#do_action('open', 'vsplit')
-  nnoremap <silent><buffer><expr> i defx#do_action('open', 'split')
-  nnoremap <silent><buffer><expr> t defx#do_action('open', 'tabnew')
-  nnoremap <silent><buffer><expr> o defx#do_action('open_or_close_tree')
-  nnoremap <silent><buffer><expr> O defx#do_action('open_tree_recursive')
-  nnoremap <silent><buffer><expr> x defx#do_action('close_tree')
-  nnoremap <silent><buffer><expr> P defx#do_action('open', 'pedit')
-  nnoremap <silent><buffer><expr> K defx#do_action('new_directory')
-  nnoremap <silent><buffer><expr> N defx#do_action('new_file')
-  nnoremap <silent><buffer><expr> M defx#do_action('new_multiple_files')
-  nnoremap <silent><buffer><expr> C defx#do_action('toggle_columns', 'mark:indent:icon:filename:type:size:time')
-  nnoremap <silent><buffer><expr> S defx#do_action('toggle_sort', 'time')
-  nnoremap <silent><buffer><expr> d defx#do_action('remove')
-  nnoremap <silent><buffer><expr> r defx#do_action('rename')
-  nnoremap <silent><buffer><expr> ! defx#do_action('execute_command')
-  nnoremap <silent><buffer><expr> ee defx#do_action('execute_system')
-  nnoremap <silent><buffer><expr> yy defx#do_action('yank_path')
-  nnoremap <silent><buffer><expr> . defx#do_action('toggle_ignored_files')
-  nnoremap <silent><buffer><expr> ; defx#do_action('repeat')
-  nnoremap <silent><buffer><expr> b defx#do_action('cd', ['..'])
-  nnoremap <silent><buffer><expr> ~ defx#do_action('cd')
-  nnoremap <silent><buffer><expr> q defx#do_action('quit')
-  nnoremap <silent><buffer><expr> <Space> defx#do_action('toggle_select') . 'j'
-  nnoremap <silent><buffer><expr> * defx#do_action('toggle_select_all')
-  nnoremap <silent><buffer><expr> j line('.') == line('$') ? 'gg' : 'j'
-  nnoremap <silent><buffer><expr> k line('.') == 1 ? 'G' : 'k'
-  nnoremap <silent><buffer><expr> <C-l> defx#do_action('redraw')
-  nnoremap <silent><buffer><expr> <C-g> defx#do_action('print')
-  nnoremap <silent><buffer><expr> cd defx#do_action('change_vim_cwd')
-endfunction
-
 autocmd FileType help setlocal number relativenumber
 
 autocmd FileType json syntax match Comment +\/\/.\+$+
 
+function! FzfBLinesCurrWord()
+  let currWord = expand('<cword>')
+  if len(currWord) > 0
+    call fzf#vim#blines({'options': '-q ' . currWord})
+  else
+    execute ':BLines'
+  endif
+endfunction
+
+function! Rand() abort
+  return str2nr(matchstr(reltimestr(reltime()), '\v\.@<=\d+')[1:])
+endfunction
+
+augroup fern-custom
+  autocmd! *
+  autocmd FileType fern call s:init_fern()
+augroup END
+
+function s:init_fern() abort
+  nnoremap <buffer>v <Plug>(fern-action-open:right)
+  nnoremap <buffer>i <Plug>(fern-action-open:bottom)
+  nnoremap <buffer>o <Plug>(fern-action-open-or-expand)
+endfunction
