@@ -50,6 +50,7 @@ set tabstop=2
 set shiftwidth=2
 set laststatus=2
 set nobackup
+set nowritebackup
 set noswapfile
 set ruler
 set termguicolors
@@ -84,6 +85,8 @@ set inccommand=split
 set noerrorbells
 set novisualbell
 set autoread
+set updatetime=300
+" set signcolumn=yes
 
 let mapleader="\<Space>"
 let g:lsp_log_verbose=1
@@ -116,4 +119,6 @@ augroup fern-custom
 augroup END
 
 autocmd FileType help setlocal number relativenumber
+
+autocmd FileType json syntax match Comment +\/\/.\+$+
 
