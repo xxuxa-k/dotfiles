@@ -1,0 +1,6 @@
+[ghq]
+  root = ~/ghq/tmp
+  root = ~/ghq/github.com
+[init]
+  defaultBranch = main
+
