@@ -7,7 +7,6 @@ export PATH="$HOME/slack/bin:$PATH"
 
 export EDITOR=nvim
 export GIT_EDITOR=nvim
-export JAVA_HOME=$(/usr/libexec/java_home -v 18)
 
 export XDG_CONFIG_HOME="$HOME/.config"
 export XDG_CACHE_HOME="$HOME/.cache"
