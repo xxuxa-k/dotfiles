@@ -20,6 +20,9 @@ eval "$(starship init zsh)"
 eval "$(direnv hook zsh)"
 eval "$(zoxide init zsh)"
 
+source "$(brew --prefix)/share/google-cloud-sdk/path.zsh.inc"
+source "$(brew --prefix)/share/google-cloud-sdk/completion.zsh.inc"
+
 alias ll="exa -ahl --git"
 alias nv="nvim"
 alias nvi="nvim"
