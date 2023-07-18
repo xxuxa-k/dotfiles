@@ -100,16 +100,17 @@ let g:fern#default_hidden=1
 nnoremap <silent><Esc><Esc> :nohlsearch<CR>
 nnoremap <Leader>w :w<CR>
 nnoremap <Leader>q :q!<CR>
-nnoremap ,d :<C-u>Fern . -reveal=%<CR>
 nnoremap <Leader>l :Line<CR>
 nnoremap <Leader>f :Files<CR>
 nnoremap <Leader>h :History<CR>
 nnoremap <Leader>c :Commands<CR>
 nnoremap <Leader>b :BLines<CR>
+nnoremap ,d :<C-u>Fern . -reveal=%<CR>
 
 function s:init_fern() abort
   nnoremap <buffer>v <Plug>(fern-action-open:right)
-  nnoremap <buffer>i <Plug>(fern-action-open:bottom)
+  nnoremap <buffer>i <Plug>(fern-action-open:below)
+  nnoremap <buffer>t <Plug>(fern-action-open:tabedit)
   nnoremap <buffer>o <Plug>(fern-action-open-or-expand)
 endfunction
 
