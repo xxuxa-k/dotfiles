@@ -4,11 +4,12 @@ setup_dotfiles () {
   DOTFILES_ROOT=$(cd $(dirname $0); pwd)
 
   dotfiles=$(find $DOTFILES_ROOT/home -type f)
-  dotfile_dirs=("/" "/.zsh/" "/.config/" "/.config/nvim/" "/.config/git/" "/.config/zellij/")
+  dotfile_dirs=("/" "/.zsh/" "/.config/" "/.config/nvim/" "/.config/git/" "/.config/zellij/" "/.config/tmux/")
 
   mkdir -p "$HOME/.config/nvim"
   mkdir -p "$HOME/.config/git/"
   mkdir -p "$HOME/.config/zellij/"
+  mkdir -p "$HOME/.config/tmux/"
 
   for dotfile in $dotfiles; do
     filename=$(basename $dotfile)

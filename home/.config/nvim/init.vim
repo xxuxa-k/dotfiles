@@ -39,7 +39,7 @@ scriptencoding=utf-8
 
 syntax enable
 
-colorscheme rigel
+" colorscheme rigel
 
 set encoding=utf-8
 set fileencoding=utf-8
@@ -96,12 +96,14 @@ let g:netrw_sizestyle="H"
 let g:netrw_timefmt="%Y/%m/%d(%a) %H:%M:%S"
 let g:netrw_preview=1
 let g:fern#default_hidden=1
+let g:airline#extensions#tabline#enabled=1
+let $FZF_DEFAULT_COMMAND="rg --files --hidden --glob '!.git/**'"
 
 nnoremap <silent><Esc><Esc> :nohlsearch<CR>
 nnoremap <Leader>w :w<CR>
 nnoremap <Leader>q :q!<CR>
 nnoremap <Leader>l :Line<CR>
-nnoremap <Leader>f :Files<CR>
+nnoremap <Leader>f :Files .<CR>
 nnoremap <Leader>h :History<CR>
 nnoremap <Leader>c :Commands<CR>
 nnoremap <Leader>b :BLines<CR>

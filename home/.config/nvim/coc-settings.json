@@ -1,8 +1,6 @@
 {
+  "deno.enable": true,
+  "deno.importMap": "./import_map.json",
   "languageserver": {
-    "golang": {
-      "command": "gopls",
-      "rootPatterns": ["go.mod"],
-      "filetypes": ["go"]
   }
 }
