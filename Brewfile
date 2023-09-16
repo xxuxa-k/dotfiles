@@ -42,6 +42,7 @@ brew "neovim"
 brew "nkf"
 brew "peco"
 brew "pueue"
+brew "reattach-to-user-namespace"
 brew "redis", restart_service: true
 brew "ripgrep"
 brew "rust"

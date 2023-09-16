@@ -39,7 +39,7 @@ scriptencoding=utf-8
 
 syntax enable
 
-" colorscheme rigel
+colorscheme rigel
 
 set encoding=utf-8
 set fileencoding=utf-8
@@ -108,6 +108,11 @@ nnoremap <Leader>h :History<CR>
 nnoremap <Leader>c :Commands<CR>
 nnoremap <Leader>b :BLines<CR>
 nnoremap ,d :<C-u>Fern . -reveal=%<CR>
+
+nnoremap <silent> <Leader>ge <Plug>(coc-definition)
+nnoremap <silent> <Leader>gs :sp<CR><Plug>(coc-definition)
+nnoremap <silent> <Leader>gv :vsp<CR><Plug>(coc-definition)
+nnoremap <silent> <Leader>gt :vsp<CR><Plug>(coc-definition)<C-W>T
 
 function s:init_fern() abort
   nnoremap <buffer>v <Plug>(fern-action-open:right)
