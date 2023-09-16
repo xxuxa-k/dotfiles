@@ -1,5 +1,5 @@
 [ghq]
-  root = ~/ghq/tmp
   root = ~/ghq/
+
 [init]
   defaultBranch = main

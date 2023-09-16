@@ -2,9 +2,9 @@ if [[ -s "${ZDOTDIR:-$HOME}/.zprezto/init.zsh" ]]; then
     source "${ZDOTDIR:-$HOME}/.zprezto/init.zsh"
 fi
 
-export SUDO_EDITOR="$HOMEBREW_PREFIX/bin/nvim"
-export GIT_EDITOR="$HOMEBREW_PREFIX/bin/nvim"
-export EDITOR="$HOMEBREW_PREFIX/bin/nvim"
+export SUDO_EDITOR="${HOMEBREW_PREFIX}/bin/nvim"
+export GIT_EDITOR="${HOMEBREW_PREFIX}/bin/nvim"
+export EDITOR="${HOMEBREW_PREFIX}/bin/nvim"
 
 export XDG_CONFIG_HOME="$HOME/.config"
 export XDG_CACHE_HOME="$HOME/.cache"
