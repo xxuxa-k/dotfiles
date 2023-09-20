@@ -267,6 +267,6 @@ augroup END
 
 function s:init_fern() abort
   nnoremap <buffer>v <Plug>(fern-action-open:right)
-  nnoremap <buffer>i <Plug>(fern-action-open:bottom)
+  nnoremap <buffer>i <Plug>(fern-action-open:below)
   nnoremap <buffer>o <Plug>(fern-action-open-or-expand)
 endfunction
