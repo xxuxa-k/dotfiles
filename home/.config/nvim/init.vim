@@ -10,6 +10,7 @@ call plug#begin('~/.vim/plugged')
 Plug 'junegunn/vim-plug'
 
 Plug 'Rigellute/rigel'
+Plug 'rebelot/kanagawa.nvim'
 
 Plug 'neoclide/coc.nvim', { 'branch': 'release' }
 
@@ -24,6 +25,9 @@ Plug 'lambdalisue/fern.vim'
 Plug 'lambdalisue/fern-git-status.vim'
 Plug 'LumaKernel/fern-mapping-fzf.vim'
 
+Plug 'vim-denops/denops.vim'
+Plug 'Shougo/ddu.vim'
+
 Plug 'vim-jp/vimdoc-ja'
 Plug 'editorconfig/editorconfig-vim'
 Plug 'mattn/vim-sl'
@@ -32,6 +36,7 @@ Plug 'luochen1990/rainbow'
 Plug 'mechatroner/rainbow_csv'
 Plug 'tyru/caw.vim'
 Plug 'alvan/vim-closetag'
+Plug 'cohama/lexima.vim'
 
 call plug#end()
 
@@ -40,6 +45,7 @@ scriptencoding=utf-8
 syntax enable
 
 colorscheme rigel
+" colorscheme kanagawa
 
 set encoding=utf-8
 set fileencoding=utf-8
@@ -97,6 +103,7 @@ let g:netrw_timefmt="%Y/%m/%d(%a) %H:%M:%S"
 let g:netrw_preview=1
 let g:fern#default_hidden=1
 let g:airline#extensions#tabline#enabled=1
+let g:readme_viewer#plugin_manager = 'vim-plug'
 let $FZF_DEFAULT_COMMAND="rg --files --hidden --glob '!.git/**'"
 
 nnoremap <silent><Esc><Esc> :nohlsearch<CR>

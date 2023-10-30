@@ -2,7 +2,8 @@ if [[ -s "${ZDOTDIR:-$HOME}/.zprezto/init.zsh" ]]; then
     source "${ZDOTDIR:-$HOME}/.zprezto/init.zsh"
 fi
 
-export PATH="$HOMEBREW_PREFIX/opt/openjdk/bin:$PATH"
+export PATH="/opt/homebrew/opt/curl/bin:$PATH"
+export PATH="/opt/homebrew/opt/openjdk/bin:$PATH"
 export PATH="$HOME/slack/bin:$PATH"
 
 export EDITOR=nvim
@@ -23,7 +24,10 @@ eval "$(zoxide init zsh)"
 source "$(brew --prefix)/share/google-cloud-sdk/path.zsh.inc"
 source "$(brew --prefix)/share/google-cloud-sdk/completion.zsh.inc"
 
-alias ll="exa -ahl --git"
+autoload bashcompinit && bashcompinit
+complete -C '/usr/local/bin/aws_completer' aws
+
+alias ll="eza -ahl --git"
 alias nv="nvim"
 alias nvi="nvim"
 

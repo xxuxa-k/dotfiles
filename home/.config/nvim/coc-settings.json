@@ -2,5 +2,14 @@
   "deno.enable": true,
   "deno.importMap": "./import_map.json",
   "languageserver": {
-  }
+  },
+  "graphql.filetypes": [
+    "graphql",
+    "javascript",
+    "javascriptreact",
+    "typescript",
+    "typescriptreact",
+    "reason"
+  ],
+  "graphql.watcherPattern": "**/*.{graphql,gql,js,jsx,ts,tsx,re}"
 }
