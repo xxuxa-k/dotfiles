@@ -1,4 +1,6 @@
 {
   "deno.enable": true,
-  "deno.importMap": "./import_map.json"
+  "tsserver.enable": true,
+  "languageserver": {
+  }
 }

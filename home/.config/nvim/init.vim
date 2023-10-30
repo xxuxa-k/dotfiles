@@ -22,6 +22,10 @@ Plug 'lambdalisue/fern.vim'
 Plug 'lambdalisue/fern-git-status.vim'
 Plug 'LumaKernel/fern-mapping-fzf.vim'
 
+Plug 'vim-denops/denops.vim'
+Plug 'Shougo/ddu.vim'
+Plug 'Shougo/ddu-ui-ff'
+
 Plug 'vim-jp/vimdoc-ja'
 Plug 'editorconfig/editorconfig-vim'
 Plug 'mattn/vim-sl'
@@ -30,6 +34,7 @@ Plug 'luochen1990/rainbow'
 Plug 'mechatroner/rainbow_csv'
 Plug 'tyru/caw.vim'
 Plug 'alvan/vim-closetag'
+Plug 'cohama/lexima.vim'
 
 call plug#end()
 
@@ -82,7 +87,7 @@ set noerrorbells
 set novisualbell
 set autoread
 set updatetime=300
-" set signcolumn=yes
+set signcolumn=yes
 
 let mapleader="\<Space>"
 let g:lsp_log_verbose=1
@@ -105,7 +110,12 @@ nnoremap <Leader>c :Commands<CR>
 nnoremap <Leader>b :BLines<CR>
 nnoremap ,d :<C-u>Fern . -reveal=%<CR>
 
+nmap <silent> [g <Plug>(coc-diagnostic-prev)
+nmap <silent> ]g <Plug>(coc-diagnostic-next)
 nnoremap <silent> <Leader>ge <Plug>(coc-definition)
+nnoremap <silent> <Leader>gy <Plug>(coc-type-definition)
+nnoremap <silent> <Leader>gi <Plug>(coc-implementation)
+nnoremap <silent> <Leader>gr <Plug>(coc-references)
 nnoremap <silent> <Leader>gs :sp<CR><Plug>(coc-definition)
 nnoremap <silent> <Leader>gv :vsp<CR><Plug>(coc-definition)
 nnoremap <silent> <Leader>gt :vsp<CR><Plug>(coc-definition)<C-W>T
