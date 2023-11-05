@@ -53,7 +53,7 @@ eval "$(starship init zsh)"
 eval "$(thefuck --alias)"
 eval "$(jenv init -)"
 
-alias ll='exa -ahl --git'
+alias ll='eza -ahl --git'
 alias v='vim'
 alias n='nvim'
 alias nv='nvim'
