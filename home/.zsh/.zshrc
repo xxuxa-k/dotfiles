@@ -4,7 +4,7 @@ fi
 
 export PATH="/opt/homebrew/opt/curl/bin:$PATH"
 export PATH="/opt/homebrew/opt/openjdk/bin:$PATH"
-export PATH="$HOME/slack/bin:$PATH"
+export PATH="$HOME/slack-cli/bin:$PATH"
 
 export EDITOR=nvim
 export GIT_EDITOR=nvim
@@ -15,7 +15,6 @@ export XDG_DATA_HOME="$HOME/.local/share"
 
 export TERM=xterm-256color
 
-eval "$(anyenv init -)"
 eval "$(thefuck --alias)"
 eval "$(starship init zsh)"
 eval "$(direnv hook zsh)"
@@ -23,9 +22,13 @@ eval "$(zoxide init zsh)"
 
 source "$(brew --prefix)/share/google-cloud-sdk/path.zsh.inc"
 source "$(brew --prefix)/share/google-cloud-sdk/completion.zsh.inc"
+source "$(brew --prefix asdf)/libexec/asdf.sh"
 
 autoload bashcompinit && bashcompinit
 complete -C '/usr/local/bin/aws_completer' aws
+
+fpath=(${ASDF_DIR}/completions $fpath)
+autoload -Uz compinit && compinit
 
 alias ll="eza -ahl --git"
 alias nv="nvim"
