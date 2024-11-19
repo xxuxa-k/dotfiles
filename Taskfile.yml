@@ -10,6 +10,7 @@ tasks:
     desc: Install all dotfiles
     cmds:
       - find . -name ".DS_Store" -type f -delete
+      - mkdir -p $HOME/.config $HOME/.zsh
       - stow -R -v -d . -t $HOME home
       - stow -R -v -d . -t $HOME/.config config
       - stow -R -v -d . -t $HOME/.zsh zsh
