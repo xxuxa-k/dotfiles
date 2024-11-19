@@ -4,16 +4,12 @@ tasks:
   brew-dump:
     desc: Generate new Brewfile
     cmds:
-      - brew bundle dump --brews --taps --force
+      - brew bundle dump --brews --taps --casks --force
 
   install:
     desc: Install all dotfiles
     cmds:
+      - find . -name ".DS_Store" -type f -delete
       - stow -R -v -d . -t $HOME home
       - stow -R -v -d . -t $HOME/.config config
       - stow -R -v -d . -t $HOME/.zsh zsh
-
-  clean:ds-store:
-    desc: Remove all .DS_Store recursively
-    cmds:
-      - find . -name ".DS_Store" -type f -delete
