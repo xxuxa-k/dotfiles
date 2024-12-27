@@ -3,7 +3,7 @@ local mux = wezterm.mux
 local config = wezterm.config_builder()
 
 config.automatically_reload_config = true
-config.color_scheme = "Nebula (base16)"
+-- config.color_scheme = "Nebula (base16)"
 config.font = wezterm.font_with_fallback {
 	"Hack Nerd Font",
 	"Symbols Nerd Font",

@@ -34,6 +34,7 @@ autoload -Uz compinit && compinit
 alias ll="eza -ahl --git"
 alias nv="nvim"
 alias nvi="nvim"
+alias beep="afplay /System/Library/Sounds/Ping.aiff"
 
 function peco-src() {
   local repo=$(ghq list | peco --query "$LBUFFER")

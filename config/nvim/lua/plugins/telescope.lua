@@ -23,12 +23,19 @@ return {
 			silent = true,
 			desc = "Find string under cursor in cwd",
 		},
-		{ "<leader>fb", ":Telescope buffers<CR>", desc = "buffers" },
-		{ "<leader>fr", ":Telescope registers<CR>", desc = "registers" },
+		{
+      "<leader>fb",
+      ":Telescope buffers<CR>",
+      desc = "buffers",
+    },
+		{
+      "<leader>fr",
+      ":Telescope registers<CR>",
+      desc = "registers",
+    },
 	},
 	config = function()
 		local telescope = require('telescope')
-		local telescope_builtin = require('telescope.builtin')
 		telescope.setup({
 			defaults = {
 				file_ignore_patterns = {
