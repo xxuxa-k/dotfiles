@@ -28,8 +28,16 @@ source "$(brew --prefix asdf)/libexec/asdf.sh"
 autoload bashcompinit && bashcompinit
 complete -C '/usr/local/bin/aws_completer' aws
 
-fpath=(${ASDF_DIR}/completions $fpath)
-autoload -Uz compinit && compinit
+# fpath=(${ASDF_DIR}/completions $fpath)
+# autoload -Uz compinit && compinit
+
+if type brew &>/dev/null; then
+  FPATH=$(brew --prefix)/share/zsh-completions:$FPATH
+
+  autoload -Uz compinit
+  compinit
+fi
+
 
 alias ll="eza -ahl --git"
 alias nv="nvim"
