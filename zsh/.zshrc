@@ -2,10 +2,23 @@ if [[ -s "${ZDOTDIR:-$HOME}/.zprezto/init.zsh" ]]; then
     source "${ZDOTDIR:-$HOME}/.zprezto/init.zsh"
 fi
 
-export PATH="/opt/homebrew/opt/curl/bin:$PATH"
-export PATH="/opt/homebrew/opt/openjdk/bin:$PATH"
-export PATH="$HOME/slack-cli/bin:$PATH"
-export PATH="$HOME/go/bin:$PATH"
+path=(
+  $(brew --prefix)/opt/curl/bin
+  $(brew --prefix)/opt/openjdk/bin
+  $HOME/slack-cli/bin
+  $HOME/go/bin
+  $path
+)
+fpath=(
+  ${ASDF_DIR}/completions
+  $(brew --prefix)/share/zsh-completions
+  $fpath
+)
+
+# export PATH="/opt/homebrew/opt/curl/bin:$PATH"
+# export PATH="/opt/homebrew/opt/openjdk/bin:$PATH"
+# export PATH="$HOME/slack-cli/bin:$PATH"
+# export PATH="$HOME/go/bin:$PATH"
 
 export EDITOR=nvim
 export GIT_EDITOR=nvim
@@ -25,19 +38,9 @@ source "$(brew --prefix)/share/google-cloud-sdk/path.zsh.inc"
 source "$(brew --prefix)/share/google-cloud-sdk/completion.zsh.inc"
 source "$(brew --prefix asdf)/libexec/asdf.sh"
 
-autoload bashcompinit && bashcompinit
+autoload -Uz compinit bashcompinit
+compinit bashcompinit
 complete -C '/usr/local/bin/aws_completer' aws
-
-# fpath=(${ASDF_DIR}/completions $fpath)
-# autoload -Uz compinit && compinit
-
-if type brew &>/dev/null; then
-  FPATH=$(brew --prefix)/share/zsh-completions:$FPATH
-
-  autoload -Uz compinit
-  compinit
-fi
-
 
 alias ll="eza -ahl --git"
 alias nv="nvim"
@@ -53,14 +56,16 @@ function peco-src() {
   fi
   zle clear-screen
 }
-zle -N peco-src
-bindkey '^]' peco-src
 
 function peco-select-history() {
   BUFFER=$(history -n -r 1 | peco --query "$LBUFFER")
   CURSOR=$#BUFFER
   zle reset-prompt
 }
+
+zle -N peco-src
 zle -N peco-select-history
+
+bindkey '^]' peco-src
 bindkey '^r' peco-select-history
 
