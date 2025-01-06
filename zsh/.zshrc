@@ -1,3 +1,13 @@
+typeset -U path PATH
+typeset -U fpath FPATH
+
+export EDITOR=nvim
+export GIT_EDITOR=nvim
+export XDG_CONFIG_HOME="$HOME/.config"
+export XDG_CACHE_HOME="$HOME/.cache"
+export XDG_DATA_HOME="$HOME/.local/share"
+export TERM=xterm-256color
+
 if [[ -s "${ZDOTDIR:-$HOME}/.zprezto/init.zsh" ]]; then
     source "${ZDOTDIR:-$HOME}/.zprezto/init.zsh"
 fi
@@ -5,47 +15,16 @@ fi
 path=(
   $(brew --prefix)/opt/curl/bin
   $(brew --prefix)/opt/openjdk/bin
+  $(brew --prefix)/opt/sqlite/bin
   $HOME/slack-cli/bin
   $HOME/go/bin
   $path
 )
 fpath=(
-  ${ASDF_DIR}/completions
+  $ASDF_DIR/completions
   $(brew --prefix)/share/zsh-completions
   $fpath
 )
-
-# export PATH="/opt/homebrew/opt/curl/bin:$PATH"
-# export PATH="/opt/homebrew/opt/openjdk/bin:$PATH"
-# export PATH="$HOME/slack-cli/bin:$PATH"
-# export PATH="$HOME/go/bin:$PATH"
-
-export EDITOR=nvim
-export GIT_EDITOR=nvim
-
-export XDG_CONFIG_HOME="$HOME/.config"
-export XDG_CACHE_HOME="$HOME/.cache"
-export XDG_DATA_HOME="$HOME/.local/share"
-
-export TERM=xterm-256color
-
-eval "$(thefuck --alias)"
-eval "$(starship init zsh)"
-eval "$(direnv hook zsh)"
-eval "$(zoxide init zsh)"
-
-source "$(brew --prefix)/share/google-cloud-sdk/path.zsh.inc"
-source "$(brew --prefix)/share/google-cloud-sdk/completion.zsh.inc"
-source "$(brew --prefix asdf)/libexec/asdf.sh"
-
-autoload -Uz compinit bashcompinit
-compinit bashcompinit
-complete -C '/usr/local/bin/aws_completer' aws
-
-alias ll="eza -ahl --git"
-alias nv="nvim"
-alias nvi="nvim"
-alias beep="afplay /System/Library/Sounds/Ping.aiff"
 
 function peco-src() {
   local repo=$(ghq list | peco --query "$LBUFFER")
@@ -62,6 +41,25 @@ function peco-select-history() {
   CURSOR=$#BUFFER
   zle reset-prompt
 }
+
+autoload -Uz compinit bashcompinit
+compinit && bashcompinit
+
+source "$(brew --prefix)/share/google-cloud-sdk/path.zsh.inc"
+source "$(brew --prefix)/share/google-cloud-sdk/completion.zsh.inc"
+source "$(brew --prefix asdf)/libexec/asdf.sh"
+
+complete -C '/usr/local/bin/aws_completer' aws
+
+eval "$(thefuck --alias)"
+eval "$(starship init zsh)"
+eval "$(direnv hook zsh)"
+eval "$(zoxide init zsh)"
+
+alias ll="eza -ahl --git"
+alias nv="nvim"
+alias nvi="nvim"
+alias beep="afplay /System/Library/Sounds/Ping.aiff"
 
 zle -N peco-src
 zle -N peco-select-history

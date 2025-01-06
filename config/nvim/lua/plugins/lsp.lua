@@ -35,21 +35,14 @@ return {
 				end,
 			})
 
-			local function is_deno_project()
-				return vim.fn.filereadable("deno.json") == 1 or vim.fn.filereadable("deno.jsonc") == 1
-			end
-
-			if not is_deno_project() then
-				nvim_lsp.ts_ls.setup({
-					root_dir = nvim_lsp.util.root_pattern("package.json"),
-				})
-			end
-
-			nvim_lsp.denols.setup({
-				root_dir = nvim_lsp.util.root_pattern("deno.json", "deno.jsonc"),
-			})
+      nvim_lsp.ts_ls.setup({
+        root_dir = nvim_lsp.util.root_pattern("package.json"),
+      })
+      nvim_lsp.denols.setup({
+        root_dir = nvim_lsp.util.root_pattern("deno.json", "deno.jsonc"),
+      })
 			nvim_lsp.gopls.setup({
-				root_dir = nvim_lsp.util.root_pattern("go.mod"), -- go.workとかいらない
+				root_dir = nvim_lsp.util.root_pattern("go.mod"),
 			})
 			nvim_lsp.lua_ls.setup({
 				on_init = function(client)
