@@ -4,7 +4,6 @@ return {
     dependencies = {
       "nvim-lua/plenary.nvim",
       "nvim-telescope/telescope-file-browser.nvim",
-      "nvim-telescope/telescope-frecency.nvim",
     },
     keys = {
       {
@@ -35,11 +34,6 @@ return {
         ":Telescope registers<CR>",
         desc = "registers",
       },
-      {
-        "<leader>fp",
-        ":Telescope frecency workspace=CWD<CR>",
-        desc = "frequent + recent",
-      },
     },
     config = function()
       local telescope = require('telescope')
@@ -64,7 +58,6 @@ return {
           },
         },
       })
-      telescope.load_extension("frecency")
     end,
   },
 }
