@@ -41,6 +41,7 @@ return {
       })
       nvim_lsp.denols.setup({
         root_dir = nvim_lsp.util.root_pattern("deno.json", "deno.jsonc"),
+        single_file_support = false,
       })
 			nvim_lsp.gopls.setup({
 				root_dir = nvim_lsp.util.root_pattern("go.mod"),
