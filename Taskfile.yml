@@ -6,7 +6,7 @@ tasks:
     cmds:
       - brew bundle dump --brews --taps --casks --force
 
-  install:
+  install-dotfiles:
     desc: Install all dotfiles
     cmds:
       - find . -name ".DS_Store" -type f -delete

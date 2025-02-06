@@ -27,7 +27,6 @@ return {
     },
     dependencies = {
       { "zbirenbaum/copilot.lua" },
-      { "nvim-lua/plenary.nvim" },
       { "nvim-telescope/telescope.nvim" },
       { "hrsh7th/nvim-cmp" },
     },

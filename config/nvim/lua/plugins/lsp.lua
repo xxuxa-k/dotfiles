@@ -6,12 +6,10 @@ return {
 			{
 				-- https://nvimdev.github.io/lspsaga/
 				"nvimdev/lspsaga.nvim",
-				config = function()
-					require('lspsaga').setup({
-						symble_in_winbar = { enable = false },
-						ui = { code_action = "" },
-					})
-				end,
+        opts = {
+          symble_in_winbar = { enable = false },
+          ui = { code_action = "" },
+        },
 			},
 			{
 				"folke/lazydev.nvim",
@@ -35,6 +33,12 @@ return {
 				end,
 			})
 
+      nvim_lsp.html.setup({})
+      nvim_lsp.tailwindcss.setup({})
+      nvim_lsp.cssls.setup({})
+      nvim_lsp.bashls.setup({
+        filetypes = { "bash", "sh", "zsh" },
+      })
       nvim_lsp.ts_ls.setup({
         root_dir = nvim_lsp.util.root_pattern("package.json"),
         single_file_support = false,

@@ -55,6 +55,7 @@ eval "$(thefuck --alias)"
 eval "$(starship init zsh)"
 eval "$(direnv hook zsh)"
 eval "$(zoxide init zsh)"
+eval "$(task --completion zsh)"
 
 alias ll="eza -ahl --git"
 alias nv="nvim"

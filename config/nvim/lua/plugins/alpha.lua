@@ -3,8 +3,6 @@ return {
 	event = "VimEnter",
 	dependencies = { 'echasnovski/mini.icons' },
 	config = function ()
-		local alpha = require('alpha')
-		local dashboard = require('alpha.themes.dashboard')
-		alpha.setup(dashboard.opts)
+		require('alpha').setup(require('alpha.themes.dashboard').opts)
 	end
 }
