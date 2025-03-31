@@ -18,6 +18,7 @@ path=(
   $(brew --prefix)/opt/sqlite/bin
   $HOME/slack-cli/bin
   $HOME/go/bin
+  $HOME/.asdf/shims
   $path
 )
 fpath=(
@@ -47,7 +48,7 @@ compinit && bashcompinit
 
 source "$(brew --prefix)/share/google-cloud-sdk/path.zsh.inc"
 source "$(brew --prefix)/share/google-cloud-sdk/completion.zsh.inc"
-source "$(brew --prefix asdf)/libexec/asdf.sh"
+# source "$(brew --prefix asdf)/libexec/asdf.sh"
 
 complete -C '/usr/local/bin/aws_completer' aws
 

@@ -11,7 +11,7 @@ return {
 	config = function()
 		require("noice").setup({
 			messages = {
-				-- view = "mini",
+				view = "mini",
 			},
 		})
 	end,

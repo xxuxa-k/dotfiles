@@ -3,6 +3,7 @@ return {
     "nvim-telescope/telescope.nvim",
     dependencies = {
       "nvim-telescope/telescope-file-browser.nvim",
+      "gbrlsnchs/telescope-lsp-handlers.nvim",
     },
     keys = {
       {
@@ -56,7 +57,30 @@ return {
             },
           },
         },
+        extensions = {
+          lsp_handlers = {
+            disable = {},
+            location = {
+              telescope = {},
+              no_results_message = "No locations found",
+            },
+            symbol = {
+              telescope = {},
+              no_results_message = "No symbols found",
+            },
+            call_hierarchy = {
+              telescope = {},
+              no_results_message = "No calls found",
+            },
+            code_action = {
+              telescope = require("telescope.themes").get_dropdown({}),
+              no_results_message = "No code actions available",
+              prefix = " ",
+            },
+          }
+        },
       })
+      telescope.load_extension("lsp_handlers")
     end,
   },
 }
