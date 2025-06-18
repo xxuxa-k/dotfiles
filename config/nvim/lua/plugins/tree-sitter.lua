@@ -12,6 +12,7 @@ return {
       "typescript",
       "tsx",
       "html",
+      "graphql",
     },
     modules = {},
     sync_install = false,

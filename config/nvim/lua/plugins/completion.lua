@@ -17,8 +17,6 @@ return {
       local cmp = require("cmp")
       local lspkind = require("lspkind")
 
-      require("copilot_cmp").setup()
-
       lspkind.init({
         mode = "symbol_text",
         preset = "codicons",

@@ -7,6 +7,7 @@ export XDG_CONFIG_HOME="$HOME/.config"
 export XDG_CACHE_HOME="$HOME/.cache"
 export XDG_DATA_HOME="$HOME/.local/share"
 export TERM=xterm-256color
+export VOLTA_HOME="$HOME/.volta"
 
 if [[ -s "${ZDOTDIR:-$HOME}/.zprezto/init.zsh" ]]; then
     source "${ZDOTDIR:-$HOME}/.zprezto/init.zsh"
@@ -16,7 +17,8 @@ path=(
   $(brew --prefix)/opt/curl/bin
   $(brew --prefix)/opt/openjdk/bin
   $(brew --prefix)/opt/sqlite/bin
-  $HOME/slack-cli/bin
+  $VOLTA_HOME/bin
+  $HOME/bin
   $HOME/go/bin
   $HOME/.asdf/shims
   $path
