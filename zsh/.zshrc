@@ -48,8 +48,8 @@ function peco-select-history() {
 autoload -Uz compinit bashcompinit
 compinit && bashcompinit
 
-source "$(brew --prefix)/share/google-cloud-sdk/path.zsh.inc"
-source "$(brew --prefix)/share/google-cloud-sdk/completion.zsh.inc"
+. "$HOME/google-cloud-sdk/completion.zsh.inc"
+. "$HOME/google-cloud-sdk/path.zsh.inc"
 
 complete -C '/usr/local/bin/aws_completer' aws
 
