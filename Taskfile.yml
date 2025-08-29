@@ -14,9 +14,3 @@ tasks:
       - stow -R -v -d . -t $HOME home
       - stow -R -v -d . -t $HOME/.config config
       - stow -R -v -d . -t $HOME/.zsh zsh
-
-  reset-slack-cli:
-    desc: Reset slack-cli directory
-    cmds:
-      - rm -rf $HOME/slack-cli
-      - mkdir -p $HOME/slack-cli/bin
