@@ -1,8 +1,7 @@
 # https://starship.rs/
+"$schema" = 'https://starship.rs/config-schema.json'
 
-# Disable the newline at the start of the prompt
 add_newline = true
-# Overwrite a default_prompt_order and  use custom prompt_order
 format = """\
   $username\
   $hostname\

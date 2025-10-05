@@ -20,7 +20,6 @@ path=(
   $VOLTA_HOME/bin
   $HOME/bin
   $HOME/go/bin
-  $HOME/.asdf/shims
   $path
 )
 fpath=(
