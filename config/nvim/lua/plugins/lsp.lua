@@ -1,97 +1,169 @@
 return {
-	{
-		"neovim/nvim-lspconfig",
-		event = "VeryLazy",
-		dependencies = {
-			{
-				-- https://nvimdev.github.io/lspsaga/
-				"nvimdev/lspsaga.nvim",
+  {
+    "neovim/nvim-lspconfig",
+    event = "VeryLazy",
+    dependencies = {
+      {
+        "nvimdev/lspsaga.nvim",
         opts = {
-          symble_in_winbar = { enable = false },
+          symbol_in_winbar = { enable = false },
           ui = { code_action = "" },
         },
-			},
-			{
-				"folke/lazydev.nvim",
-				ft = "lua",
-				opts = { library = { "lazy.nvim" } },
-			},
-		},
-		config = function()
-			local nvim_lsp = require("lspconfig")
-			vim.api.nvim_create_autocmd('LspAttach', {
-				group = vim.api.nvim_create_augroup('UserLspConfig', {}),
-				callback = function(ev)
-					local bufopts = { noremap = true, silent = true, buffer = ev.buf }
-					vim.keymap.set("n", "[d", "<cmd>Lspsaga diagnostic_jump_prev<CR>", bufopts)
-					vim.keymap.set("n", "]d", "<cmd>Lspsaga diagnostic_jump_next<CR>", bufopts)
-					vim.keymap.set("n", "<C-]>", "<cmd>Lspsaga goto_definition<CR>", bufopts)
-					vim.keymap.set("n", "K", "<cmd>Lspsaga hover_doc<CR>", bufopts)
-					vim.keymap.set("n", "<LocalLeader>k", vim.lsp.buf.hover, bufopts)
-					vim.keymap.set("n", "<localleader>e", "<cmd>Lspsaga outline<CR>", bufopts)
-					vim.keymap.set("n", "<LocalLeader>c", "<cmd>Lspsaga code_action<CR>", bufopts)
-				end,
-			})
-
-      nvim_lsp.html.setup({})
-      nvim_lsp.tailwindcss.setup({})
-      nvim_lsp.cssls.setup({})
-      nvim_lsp.bashls.setup({
+        keys = {
+        },
+      },
+      {
+        "folke/lazydev.nvim",
+        ft = "lua",
+        opts = { library = { "lazy.nvim" } },
+      },
+    },
+    config = function()
+      vim.diagnostic.config({
+        virtual_text = true,
+        signs = true,
+        underline = true,
+        update_in_insert = false,
+        severity_sort = true,
+      })
+      vim.lsp.config("bashls", {
         filetypes = { "bash", "sh", "zsh" },
       })
-      nvim_lsp.ts_ls.setup({
-        root_dir = nvim_lsp.util.root_pattern("package.json"),
-        single_file_support = false,
+      vim.lsp.config(
+       "denols",
+        --- @type vim.lsp.ClientConfig
+        {
+          single_file_support = false,
+        }
+      )
+      vim.lsp.config("lua_ls", {
+        on_init = function(client)
+          client.config.settings.Lua = vim.tbl_deep_extend('force', client.config.settings.Lua, {
+            runtime = {
+              version = 'LuaJIT',
+            },
+            workspace = {
+              checkThirdParty = false,
+              library = {
+                vim.env.VIMRUNTIME,
+              }
+            }
+          })
+        end,
+        settings = {
+          Lua = {
+            runtime = {
+              version = "LuaJIT",
+            },
+          }
+        },
       })
-      nvim_lsp.denols.setup({
-        root_dir = nvim_lsp.util.root_pattern("deno.json", "deno.jsonc"),
-        single_file_support = false,
+      vim.lsp.config("powershell_es", {
+        filetypes = { "ps1", "psm1", "psd1" },
+        bundle_path = "~/PowerShellEditorServices",
+        init_options = {
+          enableProfileLoading = false,
+        },
       })
-			nvim_lsp.gopls.setup({
-				root_dir = nvim_lsp.util.root_pattern("go.mod"),
-			})
-			nvim_lsp.lua_ls.setup({
-				on_init = function(client)
-					client.config.settings.Lua = vim.tbl_deep_extend('force', client.config.settings.Lua, {
-						runtime = {
-							version = 'LuaJIT',
-						},
-						workspace = {
-							checkThirdParty = false,
-							library = {
-								vim.env.VIMRUNTIME,
-							}
-						}
-					})
-				end,
-				settings = {
-					Lua = {}
-				},
-			})
-
-			vim.diagnostic.config({
-				virtual_text = true,
-				signs = true,
-				underline = true,
-				update_in_insert = false,
-				severity_sort = true,
-			})
-		end,
-	},
-	{
-		"folke/trouble.nvim",
-		cmd = "Trouble",
-		opts = {
-			win = {
-				wo = {
-					wrap = true,
-				},
-			},
-		},
-		keys = {
-			{
-				"<leader>xx", "<cmd>Trouble diagnostics toggle<CR>", desc = "Diagnostics (Trouble)",
-			}
-		},
-	},
+      vim.lsp.config("json", {
+        cmd = { "vscode-json-languageserver", "--stdio" },
+      })
+      vim.lsp.enable({
+        "lua_ls",
+        "gopls",
+        "bashls",
+        "powershell_es",
+        "html",
+        "tailwindcss",
+        "cssls",
+        "json",
+      })
+      vim.api.nvim_create_autocmd("FileType", {
+        group = vim.api.nvim_create_augroup('UserLspStartTs', { clear = true }),
+        callback = function(ev)
+          if not vim.tbl_contains(
+            {
+              "javascript",
+              "javascriptreact",
+              "javascript.jsx",
+              "typescript",
+              "typescriptreact",
+              "typescript.tsx",
+            },
+            ev.match
+          ) then
+            return
+          end
+          if vim.fn.findfile("package.json", ".;") ~= "" then
+            vim.lsp.start(vim.lsp.config.ts_ls)
+            return
+          end
+          vim.lsp.start(vim.lsp.config.denols)
+        end,
+      })
+      vim.api.nvim_create_autocmd('LspAttach', {
+        group = vim.api.nvim_create_augroup('UserLspConfig', {}),
+        callback = function(ev)
+          local bufopts = { noremap = true, silent = true, buffer = ev.buf }
+          vim.keymap.set("n", "<C-]>", "<Cmd>Lspsaga goto_definition<CR>", bufopts)
+          vim.keymap.set("n", "[d", "<Cmd>Lspsaga diagnostic_jump_prev<CR>", bufopts)
+          vim.keymap.set("n", "]d", "<Cmd>Lspsaga diagnostic_jump_next<CR>", bufopts)
+          vim.keymap.set({"n", "t"}, "<Leader>t", "<cmd>Lspsaga term_toggle<CR>", bufopts)
+          vim.keymap.set(
+            "n",
+            "K",
+            "<Cmd>Lspsaga hover_doc<CR>",
+            bufopts
+          )
+          vim.keymap.set(
+            "n",
+            "<Leader>o",
+            "<cmd>Lspsaga outline<CR>",
+            bufopts
+          )
+          vim.keymap.set(
+            "n",
+            "<Leader>c",
+            "<cmd>Lspsaga code_action<CR>",
+            bufopts
+          )
+          vim.keymap.set(
+            "n",
+            "<Leader>da",
+            "<cmd>Lspsaga show_buf_diagnostics<CR>",
+            bufopts
+          )
+          vim.keymap.set(
+            "n",
+            "<Leader>dl",
+            "<cmd>Lspsaga show_line_diagnostics<CR>",
+            bufopts
+          )
+        end,
+      })
+    end,
+  },
+  {
+    "folke/trouble.nvim",
+    cmd = "Trouble",
+    opts = {
+      win = {
+        wo = {
+          wrap = true,
+        },
+      },
+    },
+    keys = {
+      {
+        "<Leader>xx", "<cmd>Trouble diagnostics toggle<CR>", desc = "Diagnostics (Trouble)",
+      }
+    },
+  },
+  -- {
+  --   "TheLeoP/powershell.nvim",
+  --   ---@type powershell.user_config
+  --   opts = {
+  --     bundle_path = "~/PowerShellEditorServices",
+  --   },
+  -- }
 }

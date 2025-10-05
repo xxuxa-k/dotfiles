@@ -3,13 +3,14 @@ return {
   branch = "v3.x",
   cmd = "Neotree",
   dependencies = {
+    "nvim-lua/plenary.nvim",
     "nvim-tree/nvim-web-devicons",
     "MunifTanjim/nui.nvim",
   },
   keys = {
     {
       ",d",
-      ":Neotree left<CR>",
+      "<cmd>Neotree left<CR>",
       silent = true,
       desc = "Toggle file tree",
     },
@@ -19,7 +20,6 @@ return {
       filtered_items = {
         hide_dotfiles = false,
         hide_gitignored = false,
-        hide_hidden = true,
       },
     },
   },

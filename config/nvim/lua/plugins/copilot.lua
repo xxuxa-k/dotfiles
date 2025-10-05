@@ -3,26 +3,22 @@ return {
     "zbirenbaum/copilot.lua",
     cmd = "Copilot",
     event = "InsertEnter",
-    config = function()
-      require("copilot").setup({
-        suggestion = {
-          enabled = false,
-        },
-        panel = {
-          enabled = false,
-        },
-      })
-    end,
+    opts = {
+      suggestion = {
+        enabled = false,
+      },
+      panel = {
+        enabled = false,
+      },
+    },
   },
   {
     "zbirenbaum/copilot-cmp",
-    config = function()
-      require("copilot_cmp").setup()
-    end,
+    opts = {},
   },
   {
     "CopilotC-Nvim/CopilotChat.nvim",
-    branch = "canary",
+    branch = "main",
     cmd = {
       "CopilotChat",
       "CopilotChatOpen",
@@ -36,16 +32,6 @@ return {
       { "nvim-telescope/telescope.nvim" },
       { "hrsh7th/nvim-cmp" },
     },
-    keys = {
-      {
-        "<leader>cc",
-        "<Cmd>CopilotChat<CR>",
-        mode = { "n", "x" },
-        desc = "CopilotChat Open chat window",
-      },
-    },
-    config = function()
-      require("CopilotChat").setup()
-    end,
+    opts = {},
   }
 }
