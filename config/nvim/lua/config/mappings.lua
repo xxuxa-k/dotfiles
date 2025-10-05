@@ -1,7 +1,29 @@
 vim.g.mapleader = " "
 vim.g.maplocalleader = ","
 
-vim.keymap.set('n', '<Leader>q', ':q!<CR>', { noremap = true, silent = true })
-vim.keymap.set('n', '<Leader>w', ':w<CR>', { noremap = true, silent = true })
-vim.keymap.set('n', '<Esc><Esc>', ':noh<CR>', { noremap = true, silent = true })
-vim.keymap.set('n', '<Leader>e', ':lua vim.diagnostic.open_float(0, {scope="line"})<CR>', { noremap = true, silent = true })
+local opts = { noremap = true, silent = true }
+
+vim.keymap.set(
+  "n",
+  "<Esc><Esc>",
+  ":noh<CR>",
+  vim.tbl_extend("force", opts, { desc = "noh" })
+)
+vim.keymap.set(
+  "n",
+  "<Leader>w",
+  "<cmd>w<CR>",
+  vim.tbl_extend("force", opts, { desc = "w!" })
+)
+vim.keymap.set(
+  "n",
+  "<Leader>q",
+  ":q!<CR>",
+  vim.tbl_extend("force", opts, { desc = "q!"})
+)
+vim.keymap.set("n", "<Leader>pf", function()
+  local path = vim.fn.expand("%:p")
+  vim.fn.setreg("+", path)
+  print("Copied to clipboard: " .. path)
+end, vim.tbl_extend("force", opts, { desc = "Copy file absolute path" }))
+

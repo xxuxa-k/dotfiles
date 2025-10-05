@@ -1,4 +1,3 @@
-
 vim.cmd("language en_US.UTF-8")
 
 vim.g.editorconfig = true
@@ -26,3 +25,5 @@ vim.opt.splitbelow = true
 vim.opt.swapfile = false
 vim.opt.ttimeoutlen = 50
 vim.opt.ttimeout = true
+vim.opt.cursorline = true
+vim.opt.cursorcolumn = true
