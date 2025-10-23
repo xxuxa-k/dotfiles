@@ -23,6 +23,7 @@ return {
           "editorconfig",
           "json",
           "json5",
+          "jsonc",
           "powershell",
           "java",
           "scala",
@@ -38,6 +39,9 @@ return {
         indent = {
           enable = true,
         },
+        fold = {
+          enable = true,
+        }
       })
     end,
   },

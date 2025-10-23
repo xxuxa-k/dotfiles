@@ -37,7 +37,10 @@ return {
         "<Leader>fb",
         function()
           local builtin = require("telescope.builtin")
-          builtin.buffers()
+          builtin.buffers({
+            show_all_buffers = true,
+            only_cwd = true,
+          })
         end,
         desc = "Find buffers",
       },
@@ -61,9 +64,21 @@ return {
         "<Leader>ft",
         function()
           local builtin = require("telescope.builtin")
-          builtin.treesitter()
+          builtin.treesitter({
+            show_line = true,
+          })
         end,
         desc = "List functions, variables",
+      },
+      {
+        "<Leader>fl",
+        function()
+          local builtin = require("telescope.builtin")
+          builtin.current_buffer_fuzzy_find({
+            skip_empty_lines = true,
+          })
+        end,
+        desc = "current_buffer_fuzzy_find",
       },
     },
     opts = {

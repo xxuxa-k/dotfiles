@@ -29,13 +29,6 @@ return {
       vim.lsp.config("bashls", {
         filetypes = { "bash", "sh", "zsh" },
       })
-      vim.lsp.config(
-       "denols",
-        --- @type vim.lsp.ClientConfig
-        {
-          single_file_support = false,
-        }
-      )
       vim.lsp.config("lua_ls", {
         on_init = function(client)
           client.config.settings.Lua = vim.tbl_deep_extend('force', client.config.settings.Lua, {
@@ -65,9 +58,6 @@ return {
           enableProfileLoading = false,
         },
       })
-      vim.lsp.config("json", {
-        cmd = { "vscode-json-languageserver", "--stdio" },
-      })
       vim.lsp.enable({
         "lua_ls",
         "gopls",
@@ -76,7 +66,7 @@ return {
         "html",
         "tailwindcss",
         "cssls",
-        "json",
+        "jsonls",
       })
       vim.api.nvim_create_autocmd("FileType", {
         group = vim.api.nvim_create_augroup('UserLspStartTs', { clear = true }),
@@ -95,10 +85,10 @@ return {
             return
           end
           if vim.fn.findfile("package.json", ".;") ~= "" then
-            vim.lsp.start(vim.lsp.config.ts_ls)
+            vim.lsp.enable({"ts_ls"})
             return
           end
-          vim.lsp.start(vim.lsp.config.denols)
+          vim.lsp.enable({"denols"})
         end,
       })
       vim.api.nvim_create_autocmd('LspAttach', {
