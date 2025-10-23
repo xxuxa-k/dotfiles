@@ -6,7 +6,7 @@ local opts = { noremap = true, silent = true }
 vim.keymap.set(
   "n",
   "<Esc><Esc>",
-  ":noh<CR>",
+  "<cmd>noh<CR>",
   vim.tbl_extend("force", opts, { desc = "noh" })
 )
 vim.keymap.set(
@@ -18,7 +18,7 @@ vim.keymap.set(
 vim.keymap.set(
   "n",
   "<Leader>q",
-  ":q!<CR>",
+  "<cdm>q<CR>",
   vim.tbl_extend("force", opts, { desc = "q!"})
 )
 vim.keymap.set("n", "<Leader>pf", function()
