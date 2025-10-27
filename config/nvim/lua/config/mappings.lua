@@ -18,7 +18,7 @@ vim.keymap.set(
 vim.keymap.set(
   "n",
   "<Leader>q",
-  "<cdm>q<CR>",
+  "<cmd>q!<CR>",
   vim.tbl_extend("force", opts, { desc = "q!"})
 )
 vim.keymap.set("n", "<Leader>pf", function()

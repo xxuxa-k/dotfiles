@@ -1,7 +1,9 @@
 return {
   {
     "goolord/alpha-nvim",
-    event = "VimEnter",
+    event = {
+      "VimEnter",
+    },
     dependencies = {
       "echasnovski/mini.icons",
     },

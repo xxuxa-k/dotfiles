@@ -1,7 +1,9 @@
 return {
   {
     "hrsh7th/nvim-cmp",
-    event = "InsertEnter",
+    event = {
+      "InsertEnter",
+    },
     dependencies = {
       { "f3fora/cmp-spell" },
       { "hrsh7th/cmp-buffer" },

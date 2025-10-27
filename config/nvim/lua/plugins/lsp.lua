@@ -145,15 +145,10 @@ return {
     },
     keys = {
       {
-        "<Leader>xx", "<cmd>Trouble diagnostics toggle<CR>", desc = "Diagnostics (Trouble)",
+        "<Leader>xx",
+        "<cmd>Trouble diagnostics toggle<CR>",
+        desc = "Diagnostics (Trouble)",
       }
     },
   },
-  -- {
-  --   "TheLeoP/powershell.nvim",
-  --   ---@type powershell.user_config
-  --   opts = {
-  --     bundle_path = "~/PowerShellEditorServices",
-  --   },
-  -- }
 }
