@@ -5,10 +5,11 @@ return {
       "VimEnter",
     },
     dependencies = {
-      "echasnovski/mini.icons",
+      "nvim-mini/mini.icons",
     },
-    config = function ()
-      require("alpha").setup(require("alpha.themes.dashboard").opts)
+    config = function()
+      local theme = require("alpha.themes.startify")
+      require("alpha").setup(theme.config)
     end
   },
 }

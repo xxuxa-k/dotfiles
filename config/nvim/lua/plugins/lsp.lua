@@ -107,6 +107,12 @@ return {
           )
           vim.keymap.set(
             "n",
+            "P",
+            "<Cmd>Lspsaga peek_definition<CR>",
+            bufopts
+          )
+          vim.keymap.set(
+            "n",
             "<Leader>o",
             "<cmd>Lspsaga outline<CR>",
             bufopts

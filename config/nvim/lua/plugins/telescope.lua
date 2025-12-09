@@ -136,4 +136,16 @@ return {
       telescope.load_extension("box-drawing")
     end,
   },
+  {
+    "wsdjeg/mru.nvim",
+    requires = {
+      "nvim-telescope/telescope.nvim",
+    },
+    config = function()
+      require("mru").setup({})
+      vim.keymap.set("n", "<leader>fm", function()
+        require("telescope").extensions.mru.mru()
+      end)
+    end,
+  },
 }

@@ -1,5 +1,4 @@
 local wezterm = require 'wezterm'
-local mux = wezterm.mux
 local config = wezterm.config_builder()
 
 config.automatically_reload_config = true
